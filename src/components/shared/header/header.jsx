@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from "react-router-dom";
 import { FaHome, FaChartPie, FaSearch, FaUserCircle, FaSignOutAlt, FaAngleDoubleRight } from 'react-icons/fa';
 import { FiFilm, FiMenu } from 'react-icons/fi';
 import { MdSettings } from 'react-icons/md';
@@ -32,7 +33,7 @@ function Header() {
         <header className="flex flex-wrap bg-main-dark">
           <div className="flex flex-1">
             <button onClick={toggleMobileMenu} className="nav-btn mr-1 block md:hidden"><FiMenu /></button>
-            <button className="nav-btn mr-3 hidden md:flex border-success"><FaHome className="mr-1" />Home</button>
+            <Link className="nav-btn mr-3 hidden md:flex border-success" to="/"><FaHome className="mr-1" />Home</Link>
             <div className="flex-1 my-2 max-w-2xl relative">
               <div className="flex rounded border border-main-light overflow-hidden">
                 <input tabIndex="0" type="text" className="flex-1 bg-main px-2" placeholder="Search..." />
@@ -66,22 +67,20 @@ function Header() {
             </div>
           </div>
           <div className="flex">
-            <button className="nav-btn hidden md:flex"><FiFilm className="mr-1" />My Movies</button>
-            {/* <button className="nav-btn hidden md:flex"><FaChartPie className="mr-1" /> Statistics</button> */}
+            <Link className="nav-btn hidden md:flex" to="/my-movies"><FiFilm className="mr-1" />My Movies</Link>
             <button className="flex text-white h-full items-center px-3 py-2 text-lg md:hidden"><FaUserCircle className="mr-1" /></button>
             <AccountDropDown />
           </div>
           <div className={`${hideMobileMenu ? 'hidden' : 'block'} w-full divide-y divide-main-light`}>
             <div>
-                <button className="nav-btn flex w-full"><FiFilm className="mr-1" />My Movies</button>
-                <button className="nav-btn flex w-full"><FaChartPie className="mr-1" /> Statistics</button>
+                <Link className="nav-btn flex w-full" to="/"><FaHome className="mr-1" />Home</Link>
+                <Link className="nav-btn flex w-full" to="/my-movies"><FiFilm className="mr-1" />My Movies</Link>
                 </div>
                 <div>
-                <button className="nav-btn flex w-full"><MdSettings className="mr-1" />Account settings</button>
-                <button className="nav-btn flex w-full"><FaUserCircle className="mr-1" /> Profile settings</button>
+                <Link className="nav-btn flex w-full" to="/account-settings"><MdSettings className="mr-1" />Account settings</Link>
                 </div>
                 <div>
-                <button className="nav-btn flex w-full"><FaSignOutAlt className="mr-1" />Signout</button>
+                <Link className="nav-btn flex w-full" to="/sign-in"><FaSignOutAlt className="mr-1" />Signout</Link>
             </div>
           </div>
         </header>
