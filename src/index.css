@@ -1,13 +1,78 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: gotham;
+    font-weight: normal;
+    src: url(./fonts/gotham/GOTHAM-MEDIUM.TTF) format('​truetype​') or ttf;
+  }
+  @font-face {
+    font-family: gotham;
+    font-weight: bold;
+    src: url(./fonts/gotham/GOTHAM-BOLD.TTF) format('​truetype​') or ttf;
+  }
+  body {
+    @apply bg-main-darker;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer components {
+  .nav-btn {
+    @apply text-white text-xl px-3 py-2 md:hover:bg-main items-center border-b-4 border-transparent;
+  }
+  .sign-in-box {
+    min-height: 400px;
+  }
+
+  .form-checkbox:focus,
+  .form-radio:focus {
+    --tw-ring-offset-color: transparent;
+    --tw-ring-color: theme('backgroundColor.main.outline');
+    --tw-ring-offset-width: 1px;
+    outline: none;
+  }
+
+  .aspect-w-1,
+  .aspect-w-2,
+  .aspect-w-3,
+  .aspect-w-4,
+  .aspect-w-5,
+  .aspect-w-6,
+  .aspect-w-7,
+  .aspect-w-8,
+  .aspect-w-9,
+  .aspect-w-10,
+  .aspect-w-11,
+  .aspect-w-12,
+  .aspect-w-13,
+  .aspect-w-14,
+  .aspect-w-15,
+  .aspect-w-16 {
+    overflow: hidden;
+  }
+
+  .aspect-w-1 > img,
+  .aspect-w-2 > img,
+  .aspect-w-3 > img,
+  .aspect-w-4 > img,
+  .aspect-w-5 > img,
+  .aspect-w-6 > img,
+  .aspect-w-7 > img,
+  .aspect-w-8 > img,
+  .aspect-w-9 > img,
+  .aspect-w-10 > img,
+  .aspect-w-11 > img,
+  .aspect-w-12 > img,
+  .aspect-w-13 > img,
+  .aspect-w-14 > img,
+  .aspect-w-15 > img,
+  .aspect-w-16 > img {
+    min-width: 100%;
+    max-height: 100%;
+    width: unset;
+    height: unset;
+    max-width: unset;
+  }
 }
