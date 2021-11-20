@@ -100,7 +100,7 @@ export default function Home () {
         <main className="p-4 flex justify-center">
             <MovieList title="Now Playing" list={movieList} />
         </main>
-        <MovieDetails />
+        {/* <MovieDetails /> */}
         </>
     )
 }

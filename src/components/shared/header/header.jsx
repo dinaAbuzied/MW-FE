@@ -1,30 +1,20 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
-import { FaHome, FaSearch, FaUserCircle, FaSignOutAlt, FaAngleDoubleRight } from 'react-icons/fa';
+import { FaHome, FaSearch, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import { FiFilm, FiMenu } from 'react-icons/fi';
 import { MdSettings } from 'react-icons/md';
+import useDebounce from '../../../hooks/useDebounce';
+import SearchResults from './searchResults';
 import AccountDropDown from './account-dropdown';
-import Poster from '../poster';
 
 function Header() {
     const [hideMobileMenu, setHideMobileMenu] = useState(true);
+    const [searchPhrase, setSearchPhrase] = useState('');
+    const debouncedSearchTerm = useDebounce(searchPhrase, 500);
 
-    const searchResult = [{
-      name: 'The Lord of the Rings: Fellowship Of Ring',
-      year: 2001,
-      poster: 'https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_.jpg',
-      genres: ['Action','Adventure','Drama','Fantasy']
-    }, {
-      name: 'The Lord of the Rings: The Two Towers',
-      year: 2002,
-      poster: 'https://m.media-amazon.com/images/M/MV5BZGMxZTdjZmYtMmE2Ni00ZTdkLWI5NTgtNjlmMjBiNzU2MmI5XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg',
-      genres: ['Action','Adventure','Drama','Fantasy']
-    }, {
-      name: 'The Lord of the Rings: Return Of The King',
-      year: 2003,
-      poster: 'https://m.media-amazon.com/images/M/MV5BMTM0MDE5MTk0M15BMl5BanBnXkFtZTcwMzA3MTk2Mw@@._V1_.jpg',
-      genres: ['Action','Adventure','Drama','Fantasy']
-    }];
+    const onChange = (event) => {
+      setSearchPhrase(event.target.value);
+    }
 
   const toggleMobileMenu = () => {
     setHideMobileMenu(!hideMobileMenu);
@@ -36,34 +26,10 @@ function Header() {
             <Link className="nav-btn mr-3 hidden md:flex border-success" to="/"><FaHome className="mr-1" />Home</Link>
             <div className="flex-1 my-2 max-w-2xl relative">
               <div className="flex rounded border border-main-light overflow-hidden">
-                <input tabIndex="0" type="text" className="flex-1 bg-main px-2" placeholder="Search..." />
+                <input tabIndex="0" type="text" className="flex-1 bg-main px-2 text-white" placeholder="Search..." onChange={onChange} />
                 <button className="text-white bg-success hover:bg-success-dark p-1.5"><FaSearch /></button>
               </div>
-              <ul className="absolute w-full bg-main mt-1.5 rounded border border-main-light overflow-hidden hidden">
-                {
-                  searchResult.map(movie => (
-                    <li key={movie.name} className="flex p-2 border-b border-main-light">
-                      <div className="w-10 text-2xs"><Poster poster={movie.poster} name={movie.name}/></div>
-                      <div className="flex-1 pl-5">
-                        <span className="text-sm text-white font-bold">{movie.name} ({movie.year})</span>
-                        <div>
-                          {
-                            movie.genres.map((genre, i) => (
-                              <span key={movie.name + i + genre} className="text-sm text-main-light italic">{genre}{i < movie.genres.length - 1 ? ', ' : '.'}</span>
-                            ))
-                          }
-                        </div>
-                      </div>
-                    </li>
-                  ))
-                }
-                <li>
-                  <a className="flex p-4 justify-between items-center bg-main-dark hover:bg-success group" href="www.imdb.com">
-                    <span className="text-white">see more results for "Lord of the Rings"</span>
-                    <FaAngleDoubleRight className="text-white opacity-20 group-hover:text-black" />
-                  </a>
-                </li>
-              </ul>
+              <SearchResults phrase={debouncedSearchTerm} />
             </div>
           </div>
           <div className="flex">
