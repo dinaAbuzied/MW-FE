@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { genres } from './genres';
 
 // Define a service using a base URL and expected endpoints
 export const searchApi = createApi({
@@ -6,11 +7,12 @@ export const searchApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/api/search' }),
     endpoints: (builder) => ({
         getShortMovieList: builder.query({
-            query: (query) => `short/?query=${query}`,
+            query: (query) => `short/?query=${query}&language=en-US&include_adult=false`,
             transformResponse: (response) => {
                 return response.results.map(movie => {
                     const year = new Date(movie.release_date).getFullYear();
-                    return { ...movie, year }
+                    const list = movie.genre_ids.map(genre => genres.find(d => d.id === genre));
+                    return { ...movie, year, genres: list }
                 })
             }
         }),

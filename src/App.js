@@ -9,8 +9,12 @@ import Home from './components/home/home';
 import MyMovies from './components/my-movies/my-movies';
 import SearchResults from './components/search-results/search-results';
 import AccountSetting from './components/account-settings/account-settings';
+import { useGetMovieGenresQuery } from './service/genres';
 
 function App() {
+  const { isLoading } = useGetMovieGenresQuery();
+
+  if (isLoading) return (<></>);
   return (
     <BrowserRouter>
       <Routes>
