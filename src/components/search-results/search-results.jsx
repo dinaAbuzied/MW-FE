@@ -18,13 +18,14 @@ function SearchResults() {
         setCurrentPage(page);
     }
 
+    if(isUninitialized) return (<></>);
     return (
         <>
         <Header/>
         <main className="p-4 flex">
             <SearchResultsTable isFetching={isFetching} isUninitialized={isUninitialized} data={data} phrase={params.phrase} changePage={changePage} />
             {
-                isFetching ? (<></>) : (
+                isFetching || isUninitialized ? (<></>) : (
                     <div className="xl:w-4/12 w-3/12 max-w-md hidden lg:block pl-4">
                         <FilterTable/>
                     </div>
