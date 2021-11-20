@@ -20,7 +20,9 @@ function App() {
       <Routes>
         <Route exact path="/sign-in" element={<SignIn />} />
         <Route path="/" element={<Home />} />
-        <Route path="/search" element={<SearchResults />} />
+        <Route path="/search" element={<SearchResults />}>
+          <Route path=":phrase" element={<SearchResults />} />
+        </Route>
         <Route path="/my-movies" element={<MyMovies />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/account-settings" element={<AccountSetting />} />

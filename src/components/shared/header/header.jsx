@@ -27,7 +27,7 @@ function Header() {
             <div className="flex-1 my-2 max-w-2xl relative">
               <div className="flex rounded border border-main-light overflow-hidden">
                 <input tabIndex="0" type="text" className="flex-1 bg-main px-2 text-white" placeholder="Search..." onChange={onChange} />
-                <button className="text-white bg-success hover:bg-success-dark p-1.5"><FaSearch /></button>
+                <Link className="text-white bg-success hover:bg-success-dark p-1.5" to={'/search/' + searchPhrase}><FaSearch /></Link>
               </div>
               <SearchResults phrase={debouncedSearchTerm} />
             </div>

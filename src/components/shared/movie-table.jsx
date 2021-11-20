@@ -6,14 +6,14 @@ export default function MovieTable({movies, toggleList}) {
         <ul className="mt-4">
                 {
                     movies.map((movie, movieIndex) => (
-                        <li key={movie.name} className="flex p-1 bg-main odd:bg-main-light mb-1">
-                            <div className="w-12 text-2xs"><Poster poster={movie.poster} name={movie.name} dark={movieIndex % 2 === 0}/></div>
+                        <li key={movie.id} className="flex p-1 bg-main odd:bg-main-light mb-1">
+                            <div className="w-12 text-2xs"><Poster poster={movie.poster_path} name={movie.title} dark={movieIndex % 2 === 0} size="small"/></div>
                             <div className="flex-1 pl-2">
-                                <span className="text-sm text-white font-bold">{movie.name} ({movie.year})</span>
+                                <span className="text-sm text-white font-bold">{movie.title} ({movie.year})</span>
                                 <div>
                                 {
                                     movie.genres.map((genre, i) => (
-                                    <span key={movie.name + i + genre} className="text-sm text-white opacity-40 italic">{genre}{i < movie.genres.length - 1 ? ', ' : '.'}</span>
+                                    <span key={genre.id} className="text-sm text-white opacity-40 italic">{genre.name}{i < movie.genres.length - 1 ? ', ' : '.'}</span>
                                     ))
                                 }
                                 </div>

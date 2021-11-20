@@ -41,7 +41,7 @@ export default function SearchResults ({phrase}) {
                   ))
                 }
                 <li>
-                    <Link className="flex p-4 justify-between items-center bg-main-dark hover:bg-success group" to="/search">
+                    <Link className="flex p-4 justify-between items-center bg-main-dark hover:bg-success group" to={'/search/' + phrase}>
                         <span className="text-white">see more results for "{phrase}"</span>
                         <FaAngleDoubleRight className="text-white opacity-20 group-hover:text-black" />
                     </Link>

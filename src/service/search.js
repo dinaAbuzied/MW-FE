@@ -7,7 +7,7 @@ export const searchApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/api/search' }),
     endpoints: (builder) => ({
         getShortMovieList: builder.query({
-            query: (query) => `short/?query=${query}&language=en-US&include_adult=false`,
+            query: (query) => `short/?query=${query}`,
             transformResponse: (response) => {
                 return response.results.map(movie => {
                     const year = new Date(movie.release_date).getFullYear();
@@ -16,9 +16,22 @@ export const searchApi = createApi({
                 })
             }
         }),
+        getLongMovieList: builder.query({
+            query: (params) => `?query=${params.query}&page=${params.page}`,
+            transformResponse: (response) => {
+                return {
+                    ...response, results: response.results.map(movie => {
+                        const year = new Date(movie.release_date).getFullYear();
+                        const list = movie.genre_ids.map(genre => genres.find(d => d.id === genre));
+                        return { ...movie, year, genres: list }
+                    }),
+                    pageSize: 20
+                }
+            }
+        }),
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetShortMovieListQuery } = searchApi;
+export const { useGetShortMovieListQuery, useGetLongMovieListQuery } = searchApi;
