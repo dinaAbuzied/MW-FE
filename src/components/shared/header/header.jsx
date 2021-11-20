@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
-import { FaHome, FaChartPie, FaSearch, FaUserCircle, FaSignOutAlt, FaAngleDoubleRight } from 'react-icons/fa';
+import { FaHome, FaSearch, FaUserCircle, FaSignOutAlt, FaAngleDoubleRight } from 'react-icons/fa';
 import { FiFilm, FiMenu } from 'react-icons/fi';
 import { MdSettings } from 'react-icons/md';
 import AccountDropDown from './account-dropdown';
