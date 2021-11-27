@@ -2,16 +2,22 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { searchApi } from './service/search';
 import { genresApi } from './service/genres';
-import movieSlice from './features/movie/movieSlice';
+import { languagesApi } from './service/languages';
+import { movieApi } from './service/movie';
+import querySlice from './service/query';
+import dialogSlice from './service/dialog';
 
 const store = configureStore({
     reducer: {
         [searchApi.reducerPath]: searchApi.reducer,
         [genresApi.reducerPath]: genresApi.reducer,
-        movie: movieSlice
+        [languagesApi.reducerPath]: languagesApi.reducer,
+        [movieApi.reducerPath]: movieApi.reducer,
+        dialog: dialogSlice,
+        query: querySlice
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(searchApi.middleware),
+        getDefaultMiddleware().concat(searchApi.middleware).concat(genresApi.middleware).concat(languagesApi.middleware).concat(movieApi.middleware),
 })
 
 setupListeners(store.dispatch)

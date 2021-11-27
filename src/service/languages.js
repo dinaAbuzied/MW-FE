@@ -1,17 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const genres = [];
-
 // Define a service using a base URL and expected endpoints
-export const genresApi = createApi({
-    reducerPath: 'genresApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/api/genres' }),
+export const languagesApi = createApi({
+    reducerPath: 'languagesApi',
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/api/languages' }),
     endpoints: (builder) => ({
-        getMovieGenres: builder.query({
+        getLanguages: builder.query({
             query: () => ``,
             transformResponse: (respose) => {
-                genres.push(...respose.genres);
-                return respose.genres;
+                return respose.languages;
             }
         }),
     }),
@@ -19,4 +16,4 @@ export const genresApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetMovieGenresQuery } = genresApi;
+export const { useGetLanguagesQuery } = languagesApi;

@@ -1,6 +1,5 @@
 import MovieList from "./movie-list";
 import Header from '../shared/header/header';
-import MovieDetails from '../shared/movie-details';
 
 export default function Home () {
     const movieList = [{
@@ -100,7 +99,6 @@ export default function Home () {
         <main className="p-4 flex justify-center">
             <MovieList title="Now Playing" list={movieList} />
         </main>
-        {/* <MovieDetails /> */}
         </>
     )
 }

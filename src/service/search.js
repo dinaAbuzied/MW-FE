@@ -17,7 +17,14 @@ export const searchApi = createApi({
             }
         }),
         getLongMovieList: builder.query({
-            query: (params) => `?query=${params.query}&page=${params.page}`,
+            query: (params) => {
+                // `?query=${params.query}&page=${params.page}`
+                const { query, page, filters } = params;
+                return {
+                    url: '/',
+                    params: { query, page, filters }
+                }
+            },
             transformResponse: (response) => {
                 return {
                     ...response, results: response.results.map(movie => {

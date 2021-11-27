@@ -44,6 +44,9 @@ module.exports = {
       },
       transitionProperty: {
         'bottom': 'bottom',
+      },
+      maxHeight: {
+        '85vh': '85vh'
       }
     }
   },
