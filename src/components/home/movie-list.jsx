@@ -14,8 +14,8 @@ export default function MovieList ({title, list}) {
             <main className="bg-main-dark overflow-x-auto whitespace-nowrap">
                 {
                     list.map((movie, i) => (
-                        <div key={movie.name+i} className="inline-block w-6/12 md:w-4/12 lg:w-2/12 mx-2 my-3 relative group cursor-pointer" role="button">
-                            <Poster poster={movie.poster}  name={movie.name}/>
+                        <div key={movie.id} className="inline-block w-6/12 md:w-4/12 lg:w-2/12 mx-2 my-3 relative group cursor-pointer" role="button">
+                            <Poster poster={movie.poster_path}  name={movie.name} size="medium"/>
                             <div className="absolute w-full h-full top-0 left-0 overflow-hidden">
                                 <div className="transition ease-in-out duration-500 bg-black opacity-0 w-full h-full group-hover:opacity-40"></div>
                                 <div className="transition-bottom ease-in-out duration-500 flex bg-main-dark absolute -bottom-11 w-full group-hover:bottom-0">

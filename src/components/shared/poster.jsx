@@ -4,6 +4,8 @@ export default function Poster ({poster, name, dark, size}) {
     let posterLink = poster;
     if(size === 'small') {
         posterLink = 'https://image.tmdb.org/t/p/w154' + poster;
+    } else if(size == 'medium') {
+        posterLink = 'https://image.tmdb.org/t/p/w342' + poster;
     }
     return (
         <div className="aspect-h-9 aspect-w-6 w-full">{

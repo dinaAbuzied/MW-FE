@@ -12,7 +12,7 @@ function FilterTable({inline}) {
     return (
         <div className="bg-main-dark">
                 <header className={`p-4 bg-main ${inline ? 'hidden' : ''}`}>
-                    <h2 className="text-white">Filter Search Results</h2>
+                    <h2 className="text-white">Filter Search Results <em>(coming soon)</em></h2>
                 </header>
                 <main className="p-4 text-sm">
                 <Formik
@@ -57,7 +57,7 @@ function FilterTable({inline}) {
                             </div>
                         </div>
                         <div className="flex justify-end">
-                            <button type="submit" className="bg-success text-white hover:bg-success-dark py-2 px-3 rounded w-full xl:w-auto">Search</button>
+                            <button type="submit" className="bg-success text-white hover:bg-success-dark py-2 px-3 rounded w-full xl:w-auto disabled:cursor-not-allowed disabled:opacity-20" disabled>Search</button>
                         </div>
                     </Form>
                     )}

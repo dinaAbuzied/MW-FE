@@ -37,9 +37,16 @@ export const movieApi = createApi({
                 }
             }
         }),
+        getNowPlaying: builder.query({
+            query: () => {
+                return {
+                    url: '/now_playing'
+                }
+            }
+        }),
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetMovieDetailsQuery, useGetMovieCreditsQuery } = movieApi;
+export const { useGetMovieDetailsQuery, useGetMovieCreditsQuery, useGetNowPlayingQuery } = movieApi;
