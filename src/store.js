@@ -6,6 +6,7 @@ import { languagesApi } from './service/languages';
 import { movieApi } from './service/movie';
 import querySlice from './service/query';
 import dialogSlice from './service/dialog';
+import userSlice from './service/user';
 
 const store = configureStore({
     reducer: {
@@ -14,7 +15,8 @@ const store = configureStore({
         [languagesApi.reducerPath]: languagesApi.reducer,
         [movieApi.reducerPath]: movieApi.reducer,
         dialog: dialogSlice,
-        query: querySlice
+        query: querySlice,
+        user: userSlice
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(searchApi.middleware).concat(genresApi.middleware).concat(languagesApi.middleware).concat(movieApi.middleware),

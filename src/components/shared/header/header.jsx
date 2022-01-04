@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { NavLink, Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaHome, FaSearch, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
-import { FiFilm, FiMenu } from 'react-icons/fi';
+import { FiFilm, FiMenu, FiLogIn } from 'react-icons/fi';
 import { MdSettings } from 'react-icons/md';
 import useDebounce from '../../../hooks/useDebounce';
 import SearchResults from './searchResults';
@@ -29,6 +29,8 @@ function Header() {
   const toggleMobileMenu = () => {
     setHideMobileMenu(!hideMobileMenu);
   }
+
+  const authenticated = useSelector((state) => state.user.authenticated)
     return (
         <header className="flex flex-wrap bg-main-dark">
           <div className="flex flex-1">
@@ -43,9 +45,19 @@ function Header() {
             </div>
           </div>
           <div className="flex">
-            <NavLink className={({isActive}) => isActive ? navLinkStyleActive : navLinkStyle} to="/my-movies"><FiFilm className="mr-1" />My Movies</NavLink>
-            <button className="flex text-white h-full items-center px-3 py-2 text-lg md:hidden"><FaUserCircle className="mr-1" /></button>
-            <AccountDropDown />
+            {
+              authenticated ? 
+              (
+                <>
+                  <NavLink className={({isActive}) => isActive ? navLinkStyleActive : navLinkStyle} to="/my-movies"><FiFilm className="mr-1" />My Movies</NavLink>
+                  <button className="flex text-white h-full items-center px-3 py-2 text-lg md:hidden"><FaUserCircle className="mr-1" /></button>
+                  <AccountDropDown />
+                </>
+              ) : 
+              (
+                <NavLink className={navLinkStyle} to="/sign-in"><FiLogIn className="mr-1"/> Sign in</NavLink>
+              )
+            }
           </div>
           <div className={`${hideMobileMenu ? 'hidden' : 'block'} w-full divide-y divide-main-light`}>
             <div>

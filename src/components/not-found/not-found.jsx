@@ -1,5 +1,7 @@
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function NotFound() {
+    const navigate = useNavigate();
     const btnClasses = 'h-12 lg:w-44 w-full text-xl font-black rounded';
     return(
         <main className="flex justify-center lg:items-center items-end h-screen">
@@ -11,9 +13,9 @@ export default function NotFound() {
                     <span className="xl:text-4xl text-3xl">404</span>
                     <h1 className="xl:text-5xl text-4xl mt-5 leading-tight">Houston, <br/>we’ve got a problem!</h1>
                     <p className="text-lg mb-8 mt-6 mr-1.5">Oops! It looks like the page you’re trying to reach does not exist. Please check the URL for proper spelling and capitalization.</p>
-                    <div class="-mb-1">
-                        <button class={`${btnClasses} lg:mr-9 lg:mb-0 mb-2 text-main-darker bg-white`}>Go Home</button>
-                        <button class={`${btnClasses} border-2 border-white`}>Back</button>
+                    <div class="-mb-1 flex flex-col lg:flex-row">
+                        <NavLink className={`${btnClasses} lg:mr-9 lg:mb-0 mb-2 text-main-darker bg-white flex items-center justify-center`} to="/">Go Home</NavLink>
+                        <button className={`${btnClasses} border-2 border-white`} onClick={() => navigate(-1)}>Back</button>
                     </div>
                 </div>
             </div>

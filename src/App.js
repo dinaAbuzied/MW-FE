@@ -9,7 +9,8 @@ import NotFound from './components/not-found/not-found';
 import Home from './components/home/home';
 import MyMovies from './components/my-movies/my-movies';
 import AccountSetting from './components/account-settings/account-settings';
-import MovieDetails from './components/shared/movie-details'
+import MovieDetails from './components/shared/movie-details';
+import ProtectedRoute from './components/shared/protected-route';
 import { useGetMovieGenresQuery } from './service/genres';
 
 const SearchResults = React.lazy(() => import('./components/search-results/search-results'));
@@ -33,9 +34,13 @@ function App() {
               <SearchResults />
             } />
           </Route>
-          <Route path="/my-movies" element={<Suspense fallback={<div>Loading...</div>}>
-            <MyMovies />
-          </Suspense>} />
+          <Route path="/my-movies" element={
+            <ProtectedRoute >
+              <Suspense fallback={<div>Loading...</div>}>
+                <MyMovies />
+              </Suspense>
+            </ProtectedRoute>
+          } />
           <Route path="/account-settings" element={<Suspense fallback={<div>Loading...</div>}>
             <AccountSetting />
           </Suspense>} />
