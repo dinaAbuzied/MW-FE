@@ -1,15 +1,18 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FaUserAlt, FaEnvelope, FaLock } from 'react-icons/fa';
+import { useRegisterMutation } from '../../service/user-api';
 
 function SignUpForm() {
 
+    const [registerUser, { isLoading: isRegLoading, error: regError }] = useRegisterMutation()
     return(
         <Formik
             initialValues={{ username: '', email: '', password: '', confirmPassword: '' }}
             validationSchema={Yup.object({
                 username: Yup.string()
-                .max(15, 'Must be 15 characters or less')
+                .min(4, 'Must be between 4 and 64 characters')
+                .max(64, 'Must be between 4 and 64 characters')
                 .required('Required'),
                 email: Yup.string().email('Invalid email address').required('Required'),
                 password: Yup.string().required('Required'),
@@ -18,15 +21,20 @@ function SignUpForm() {
                   }),
             })}
             onSubmit={(values, { setSubmitting }) => {
-                // setTimeout(() => {
-                // alert(JSON.stringify(values, null, 2));
-                // setSubmitting(false);
-                // }, 400);
+                setSubmitting(false);
+                const {email, password, username} = values;
                 console.log(values);
+                registerUser({email, password, username});
             }}
         >
             {({ errors, touched }) => (
             <Form>
+                {
+                    // TODO: style eror message
+                    regError ? (
+                        <div>{regError.status} {regError.data.message}</div>
+                    ) : (<></>)
+                }
                 <div className="relative mt-6">
                     <FaUserAlt className="absolute left-3 text-main-light top-1/2 transform -translate-y-1/2" />
                     <Field name="username" type="text" placeholder="Username" className={`text-white h-9 bg-main-dark placeholder-main-light border pl-9 pt-1 w-full ${errors.username && touched.username ? 'border-danger' : 'border-main-light'}`} />
