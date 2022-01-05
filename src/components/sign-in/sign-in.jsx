@@ -1,7 +1,6 @@
 import SignUpForm from './sign-up-form';
 import SignInForm from './sign-in-form';
-import { Tab } from '@headlessui/react'
-
+import { Tab } from '@headlessui/react';
 
 function SignIn() {
     

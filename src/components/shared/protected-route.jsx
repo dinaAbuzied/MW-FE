@@ -3,10 +3,11 @@ import { useSelector } from "react-redux";
 import { useLocation, Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-    const auth = useSelector((store) => store.user.authenticated);
+    const auth = useSelector((state) => state.user.authenticated);
+    console.log(auth);
     const location = useLocation();
   
-    if (!auth.user) {
+    if (!auth) {
       // Redirect them to the /sign-in page, but save the current location they were
       // trying to go to when they were redirected. This allows us to send them
       // along to that page after they login, which is a nicer user experience

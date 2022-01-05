@@ -2,6 +2,7 @@ import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import { MdSettings, MdArrowDropDown } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { Menu } from '@headlessui/react';
+import { NavLink } from "react-router-dom";
 
 function AccountDropDown() {
   const user = useSelector((state) => state.user.user)
@@ -26,32 +27,32 @@ function AccountDropDown() {
         </Menu.Item> */}
         <Menu.Item>
           {({ active }) => (
-            <a
+            <NavLink
               className={`
             ${active ? '' : ''
                 }
             p-2 flex items-center hover:bg-main`}
-              href="/account-settings"
+              to="/account-settings"
             >
               <MdSettings className="mr-1" />
               Account settings
-            </a>
+            </NavLink>
           )}
         </Menu.Item>
       </div>
       <div>
         <Menu.Item>
           {({ active }) => (
-            <a
+            <NavLink
               className={`
           ${active ? '' : ''
                 }
           p-2 flex items-center hover:bg-main`}
-              href="/account-settings"
+              to="/account-settings"
             >
               <FaSignOutAlt className="mr-1" />
               Signout
-            </a>
+            </NavLink>
           )}
         </Menu.Item>
       </div>

@@ -1,8 +1,28 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from '../../service/user-api';
+import { login } from '../../service/user-slice';
 
 function SignInForm() {
+
+    const [loginUser, { isLoading, error, isSuccess, isError, data }] = useLoginMutation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isSuccess) {
+            dispatch(login(data));
+            navigate("/", { replace: true });
+        }
+        if (isError) {
+        //   toast.error(errorMessage);
+        //   dispatch(clearState());
+        }
+      }, [isSuccess, isError]);
 
     return(
         <Formik
@@ -12,16 +32,20 @@ function SignInForm() {
                 password: Yup.string().required('Required'),
             })}
             onSubmit={(values, { setSubmitting }) => {
-                // setTimeout(() => {
-                // alert(JSON.stringify(values, null, 2));
-                // setSubmitting(false);
-                // }, 400);
+                setSubmitting(false);
+                const {email, password} = values;
                 console.log(values);
+                loginUser({email, password});
             }}
         >
             {({ errors, touched }) => (
             <Form>
-        
+                {
+                    // TODO: style error message
+                    error ? (
+                        <div>{error.status} {error.data.message}</div>
+                    ) : (<></>)
+                }
                 <div className="relative mt-6">
                     <FaEnvelope className="absolute left-3 text-main-light top-1/2 transform -translate-y-1/2" />
                     <Field name="email" type="email" placeholder="E-mail" className={`text-white h-9 bg-main-dark placeholder-main-light border pl-9 pt-1 w-full ${errors.email && touched.email ? 'border-danger' : 'border-main-light'}`} />

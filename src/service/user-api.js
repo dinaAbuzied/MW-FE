@@ -18,9 +18,22 @@ export const userApi = createApi({
                 return respose;
             }
         }),
+        login: builder.mutation({
+            query: (body) => {
+                return {
+                    url: '/login',
+                    method: 'POST',
+                    body
+                }
+            },
+            transformResponse: (respose) => {
+                console.log(respose);
+                return respose;
+            }
+        }),
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useRegisterMutation } = userApi;
+export const { useRegisterMutation, useLoginMutation } = userApi;

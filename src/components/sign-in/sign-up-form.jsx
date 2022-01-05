@@ -9,20 +9,20 @@ import { login } from '../../service/user-slice';
 
 function SignUpForm() {
 
-    const [registerUser, { isLoading: isRegLoading, error: regError, isSuccess: isRegSuccess, isError: isRegError, data: regData }] = useRegisterMutation();
+    const [registerUser, { isLoading, error, isSuccess, isError, data }] = useRegisterMutation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (isRegSuccess) {
-            dispatch(login(regData));
+        if (isSuccess) {
+            dispatch(login(data));
             navigate("/", { replace: true });
         }
-        if (isRegError) {
+        if (isError) {
         //   toast.error(errorMessage);
         //   dispatch(clearState());
         }
-      }, [isRegSuccess, isRegError]);
+      }, [isSuccess, isError]);
 
     return(
         <Formik
@@ -48,9 +48,9 @@ function SignUpForm() {
             {({ errors, touched }) => (
             <Form>
                 {
-                    // TODO: style eror message
-                    regError ? (
-                        <div>{regError.status} {regError.data.message}</div>
+                    // TODO: style error message
+                    error ? (
+                        <div>{error.status} {error.data.message}</div>
                     ) : (<></>)
                 }
                 <div className="relative mt-6">

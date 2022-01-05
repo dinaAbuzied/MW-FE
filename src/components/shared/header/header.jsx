@@ -31,6 +31,7 @@ function Header() {
   }
 
   const authenticated = useSelector((state) => state.user.authenticated)
+  console.log(authenticated);
     return (
         <header className="flex flex-wrap bg-main-dark">
           <div className="flex flex-1">
