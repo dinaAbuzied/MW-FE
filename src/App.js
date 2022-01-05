@@ -41,9 +41,13 @@ function App() {
               </Suspense>
             </ProtectedRoute>
           } />
-          <Route path="/account-settings" element={<Suspense fallback={<div>Loading...</div>}>
-            <AccountSetting />
-          </Suspense>} />
+          <Route path="/account-settings" element={
+            <ProtectedRoute>
+              <Suspense fallback={<div>Loading...</div>}>
+                <AccountSetting />
+              </Suspense>
+            </ProtectedRoute>
+          } />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter >

@@ -1,11 +1,29 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FaUserAlt, FaEnvelope, FaLock } from 'react-icons/fa';
 import { useRegisterMutation } from '../../service/user-api';
+import { login } from '../../service/user-slice';
 
 function SignUpForm() {
 
-    const [registerUser, { isLoading: isRegLoading, error: regError }] = useRegisterMutation()
+    const [registerUser, { isLoading: isRegLoading, error: regError, isSuccess: isRegSuccess, isError: isRegError, data: regData }] = useRegisterMutation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isRegSuccess) {
+            dispatch(login(regData));
+            navigate("/", { replace: true });
+        }
+        if (isRegError) {
+        //   toast.error(errorMessage);
+        //   dispatch(clearState());
+        }
+      }, [isRegSuccess, isRegError]);
+
     return(
         <Formik
             initialValues={{ username: '', email: '', password: '', confirmPassword: '' }}

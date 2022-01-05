@@ -2,14 +2,16 @@ import { FaUserCircle } from 'react-icons/fa';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Header from '../shared/header/header';
+import { useSelector } from 'react-redux';
 
 export default function AccountSetting() {
+    const user = useSelector((state) => state.user.user);
     return (
         <>
             <Header/>
             <main className="p-4 max-w-screen-xl mx-auto">
                 <Formik
-                initialValues={{ fname: '', lname: '', username: '', email: '' }}
+                initialValues={{ fname: '', lname: '', username: user.username, email: user.email }}
                 validationSchema={Yup.object({
                     fname: Yup.string()
                     .max(15, 'Must be 15 characters or less'),
