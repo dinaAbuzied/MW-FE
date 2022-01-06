@@ -3,7 +3,19 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
     reducerPath: 'userApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/api/user' }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://localhost:3100/api/user',
+        prepareHeaders: (headers, { getState }) => {
+            const token = getState().user.token;
+
+            // If we have a token set in state, let's assume that we should be passing it.
+            if (token) {
+                headers.set('x-auth-token', token)
+            }
+
+            return headers
+        },
+    }),
     endpoints: (builder) => ({
         register: builder.mutation({
             query: (body) => {
@@ -12,10 +24,6 @@ export const userApi = createApi({
                     method: 'POST',
                     body
                 }
-            },
-            transformResponse: (respose) => {
-                console.log(respose);
-                return respose;
             }
         }),
         login: builder.mutation({
@@ -25,10 +33,47 @@ export const userApi = createApi({
                     method: 'POST',
                     body
                 }
-            },
-            transformResponse: (respose) => {
-                console.log(respose);
-                return respose;
+            }
+        }),
+        update: builder.mutation({
+            query: ({ id, values }) => {
+                console.log(values);
+                return {
+                    url: '/' + id,
+                    method: 'PUT',
+                    body: values
+                }
+            }
+        }),
+    }),
+})
+
+export const imagesApi = createApi({
+    reducerPath: 'imagesApi',
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://localhost:3100/api/images',
+        prepareHeaders: (headers, { getState }) => {
+            const token = getState().user.token;
+
+            // If we have a token set in state, let's assume that we should be passing it.
+            if (token) {
+                headers.set('x-auth-token', token)
+            }
+
+            return headers
+        },
+    }),
+    endpoints: (builder) => ({
+        profile: builder.mutation({
+            query: ({ file, id }) => {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('userID', id);
+                return {
+                    url: '/profile',
+                    method: 'POST',
+                    body: formData
+                }
             }
         }),
     }),
@@ -36,4 +81,5 @@ export const userApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useRegisterMutation, useLoginMutation } = userApi;
+export const { useRegisterMutation, useLoginMutation, useUpdateMutation } = userApi;
+export const { useProfileMutation } = imagesApi;

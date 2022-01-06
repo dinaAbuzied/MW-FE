@@ -31,7 +31,6 @@ function Header() {
   }
 
   const authenticated = useSelector((state) => state.user.authenticated)
-  console.log(authenticated);
     return (
         <header className="flex flex-wrap bg-main-dark">
           <div className="flex flex-1">
@@ -51,7 +50,9 @@ function Header() {
               (
                 <>
                   <NavLink className={({isActive}) => isActive ? navLinkStyleActive : navLinkStyle} to="/my-movies"><FiFilm className="mr-1" />My Movies</NavLink>
-                  <button className="flex text-white h-full items-center px-3 py-2 text-lg md:hidden"><FaUserCircle className="mr-1" /></button>
+                  <button className="flex text-white h-full items-center px-3 py-2 text-lg md:hidden">
+                    <FaUserCircle className="mr-1" />
+                  </button>
                   <AccountDropDown />
                 </>
               ) : 

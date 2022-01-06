@@ -2,27 +2,19 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from '../../service/user-api';
-import { login } from '../../service/user-slice';
 
 function SignInForm() {
 
-    const [loginUser, { isLoading, error, isSuccess, isError, data }] = useLoginMutation();
+    const [loginUser, { isLoading, error, isSuccess }] = useLoginMutation();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if (isSuccess) {
-            dispatch(login(data));
             navigate("/", { replace: true });
         }
-        if (isError) {
-        //   toast.error(errorMessage);
-        //   dispatch(clearState());
-        }
-      }, [isSuccess, isError]);
+      }, [isSuccess]);
 
     return(
         <Formik

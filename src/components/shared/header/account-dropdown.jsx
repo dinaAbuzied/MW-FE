@@ -1,11 +1,14 @@
 import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import { MdSettings, MdArrowDropDown } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Menu } from '@headlessui/react';
 import { NavLink } from "react-router-dom";
+import { logout } from '../../../service/user-slice';
 
 function AccountDropDown() {
-  const user = useSelector((state) => state.user.user)
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+
     return(
     <Menu as="div" className="relative hidden md:block">
     <Menu.Button className="flex text-white h-full items-center px-3 py-2 text-lg hover:bg-main"><FaUserCircle className="mr-1" /> {user.username} <MdArrowDropDown className="ml-1"/></Menu.Button>
@@ -42,18 +45,14 @@ function AccountDropDown() {
       </div>
       <div>
         <Menu.Item>
-          {({ active }) => (
             <NavLink
-              className={`
-          ${active ? '' : ''
-                }
-          p-2 flex items-center hover:bg-main`}
-              to="/account-settings"
+             onClick={()=>{dispatch(logout());}}
+              className={`p-2 flex items-center hover:bg-main`}
+              to="/sign-in"
             >
               <FaSignOutAlt className="mr-1" />
               Signout
             </NavLink>
-          )}
         </Menu.Item>
       </div>
     </Menu.Items>
