@@ -6,6 +6,7 @@ import {FaHeart, FaRegEye, FaGift, FaPlus, FaChevronRight, FaChevronDown} from '
 import Poster from './poster';
 import useToggle from '../../hooks/useToggle';
 import { useGetMovieDetailsQuery, useGetMovieCreditsQuery } from '../../service/movie';
+import { useToggleListMutation } from '../../service/movie-list';
 import { closeDialog } from '../../service/dialog';
 import FlagIcon from '../../service/flag-icon';
 
@@ -13,13 +14,15 @@ export default function MovieDetails() {
   let [showCast, toggleShowCast] = useToggle(false);
 
   const dialog = useSelector((state) => state.dialog.movieDetails);
-  const {isFetching, error, data: movie = {fav: false, own:false, wish: false, later: false}, isUninitialized} = useGetMovieDetailsQuery(dialog.params.id, {
+  const {isFetching, error, data: movie = {lists: []}, isUninitialized} = useGetMovieDetailsQuery(dialog.params.id, {
     skip: !(dialog.params && dialog.params.id),
   });
   const {isFetching: creditsIsFetched, error: creditsError, data: credits, isUninitialized: creditsIsUninitialized} = useGetMovieCreditsQuery(dialog.params.id, {
     skip: !(dialog.params && dialog.params.id),
   });
   const dispatch = useDispatch();
+
+  const [toggleList, { isLoading: toggleLoading, error: toggleError, isSuccess: toggleSuccess }] = useToggleListMutation();
 
   if(isUninitialized) return (<></>)
   return (
@@ -180,16 +183,16 @@ export default function MovieDetails() {
                 </div>
 
                 <div className="mt-3 flex">
-                  <button disabled={isFetching} title="favorite" className={`flex-1 mr-0.5 flex justify-center items-center py-3 border-t-4 ${movie.fav ? 'bg-danger border-danger-dark' : 'bg-main border-danger'}`} onClick={() => {}}>
+                  <button disabled={isFetching} title="favorite" className={`flex-1 mr-0.5 flex justify-center items-center py-3 border-t-4 ${movie.lists.includes('fav') ? 'bg-danger border-danger-dark' : 'bg-main border-danger'}`} onClick={() => {toggleList({list: 'fav', movieID: movie.id})}}>
                       <span className="text-black opacity-25"><FaHeart /></span>
                   </button>
-                  <button disabled={isFetching} title="watch later" className={`flex-1 mr-0.5 flex justify-center items-center py-3 border-t-4 ${movie.later ? 'bg-success border-success-dark' : 'bg-main border-success'}`} onClick={() => {}}>
+                  <button disabled={isFetching} title="watch later" className={`flex-1 mr-0.5 flex justify-center items-center py-3 border-t-4 ${movie.lists.includes('later') ? 'bg-success border-success-dark' : 'bg-main border-success'}`} onClick={() => {toggleList({list: 'later', movieID: movie.id})}}>
                       <span className="text-black opacity-25"><FaRegEye /></span>
                   </button>
-                  <button disabled={isFetching} title="wish list" className={`flex-1 mr-0.5 flex justify-center items-center py-3 border-t-4 ${movie.wish ? 'bg-warning border-warning-dark' : 'bg-main border-warning'}`} onClick={() => {}}>
+                  <button disabled={isFetching} title="wish list" className={`flex-1 mr-0.5 flex justify-center items-center py-3 border-t-4 ${movie.lists.includes('wish') ? 'bg-warning border-warning-dark' : 'bg-main border-warning'}`} onClick={() => {toggleList({list: 'wish', movieID: movie.id})}}>
                       <span className="text-black opacity-25"><FaGift /></span>
                   </button>
-                  <button disabled={isFetching} title="own it" className={`flex-1 flex justify-center items-center py-3 border-t-4 ${movie.own ? 'bg-primary border-primary-dark' : 'bg-main border-primary'}`} onClick={() => {}}>
+                  <button disabled={isFetching} title="own it" className={`flex-1 flex justify-center items-center py-3 border-t-4 ${movie.lists.includes('own') ? 'bg-primary border-primary-dark' : 'bg-main border-primary'}`} onClick={() => {toggleList({list: 'own', movieID: movie.id})}}>
                       <span className="text-black opacity-25"><FaPlus /></span>
                   </button>
                 </div>

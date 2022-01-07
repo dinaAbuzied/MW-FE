@@ -3,7 +3,19 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 // Define a service using a base URL and expected endpoints
 export const movieApi = createApi({
     reducerPath: 'movieApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/api/movie' }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://localhost:3100/api/movie',
+        prepareHeaders: (headers, { getState }) => {
+            const token = getState().user.token;
+
+            // If we have a token set in state, let's assume that we should be passing it.
+            if (token) {
+                headers.set('x-auth-token', token)
+            }
+
+            return headers
+        },
+    }),
     endpoints: (builder) => ({
         getMovieDetails: builder.query({
             query: (id) => {
