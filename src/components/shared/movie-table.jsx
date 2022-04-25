@@ -23,10 +23,10 @@ export default function MovieTable({movies, toggleList}) {
                                 </div>
                             </div>
                             <div className="flex flex-col md:flex-row items-center">
-                                <button title="favorite" className={`p-2 md:py-0 md:pr-0 ${movie.fav ? 'text-danger' : 'text-black opacity-25'}`} onClick={()=>{toggleList(movieIndex, 'fav')}}><FaHeart/></button>
-                                <button title="watch later" className={`p-2 md:py-0 md:pr-0 ${movie.later ? 'text-success' : 'text-black opacity-25'}`} onClick={()=>{toggleList(movieIndex, 'later')}}><FaRegEye/></button>
-                                <button title="wish list" className={`p-2 md:py-0 md:pr-0 ${movie.wish ? 'text-warning' : 'text-black opacity-25'}`} onClick={()=>{toggleList(movieIndex, 'wish')}}><FaGift/></button>
-                                <button title="own it" className={`p-2 md:py-0 md:pr-0 ${movie.own ? 'text-primary' : 'text-black opacity-25'}`} onClick={()=>{toggleList(movieIndex, 'own')}}><FaPlus/></button>
+                                <button title="favorite" className={`p-2 md:py-0 md:pr-0 ${movie.lists.includes('fav') ? 'text-danger' : 'text-black opacity-25'}`} onClick={()=>{toggleList(movieIndex, 'fav')}}><FaHeart/></button>
+                                <button title="watch later" className={`p-2 md:py-0 md:pr-0 ${movie.lists.includes('later') ? 'text-success' : 'text-black opacity-25'}`} onClick={()=>{toggleList(movieIndex, 'later')}}><FaRegEye/></button>
+                                <button title="wish list" className={`p-2 md:py-0 md:pr-0 ${movie.lists.includes('wish') ? 'text-warning' : 'text-black opacity-25'}`} onClick={()=>{toggleList(movieIndex, 'wish')}}><FaGift/></button>
+                                <button title="own it" className={`p-2 md:py-0 md:pr-0 ${movie.lists.includes('own') ? 'text-primary' : 'text-black opacity-25'}`} onClick={()=>{toggleList(movieIndex, 'own')}}><FaPlus/></button>
                             </div>
                         </li>
                     ))
