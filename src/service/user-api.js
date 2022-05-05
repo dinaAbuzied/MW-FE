@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
     reducerPath: 'userApi',
+    refetchOnMountOrArgChange: true,
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:3100/api/user',
         prepareHeaders: (headers, { getState }) => {
@@ -50,6 +51,7 @@ export const userApi = createApi({
 
 export const imagesApi = createApi({
     reducerPath: 'imagesApi',
+    refetchOnMountOrArgChange: true,
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:3100/api/images',
         prepareHeaders: (headers, { getState }) => {

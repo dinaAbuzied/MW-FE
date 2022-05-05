@@ -28,7 +28,7 @@ export const movieListApi = createApi({
             async onQueryStarted({ list, movieID }, { dispatch, queryFulfilled }) {
                 // `updateQueryData` requires the endpoint name and cache key arguments,
                 // so it knows which piece of cache state to update
-                const patchResult = dispatch(
+                const patchMovieDetails = dispatch(
                     movieApi.util.updateQueryData('getMovieDetails', movieID, draft => {
                         // The `draft` is Immer-wrapped and can be "mutated" like in createSlice
                         const index = draft.lists.indexOf(list)
@@ -37,13 +37,42 @@ export const movieListApi = createApi({
                         } else {
                             draft.lists.push(list);
                         }
-                        console.log(index);
+                    })
+                )
+                const patchNowPlaying = dispatch(
+                    movieApi.util.updateQueryData('getNowPlaying', undefined, draft => {
+                        // The `draft` is Immer-wrapped and can be "mutated" like in createSlice
+                        const movie = draft.results.find(item => item.id == movieID);
+                        if (movie) {
+                            const index = movie.lists.indexOf(list)
+                            if (index >= 0) {
+                                movie.lists.splice(index, 1);
+                            } else {
+                                movie.lists.push(list);
+                            }
+                        }
+                    })
+                )
+                const patchUpComing = dispatch(
+                    movieApi.util.updateQueryData('getUpComing', undefined, draft => {
+                        // The `draft` is Immer-wrapped and can be "mutated" like in createSlice
+                        const movie = draft.results.find(item => item.id == movieID);
+                        if (movie) {
+                            const index = movie.lists.indexOf(list)
+                            if (index >= 0) {
+                                movie.lists.splice(index, 1);
+                            } else {
+                                movie.lists.push(list);
+                            }
+                        }
                     })
                 )
                 try {
-                    await queryFulfilled
+                    await queryFulfilled;
                 } catch {
-                    patchResult.undo()
+                    patchMovieDetails.undo();
+                    patchNowPlaying.undo();
+                    patchUpComing.undo();
                 }
             }
         }),

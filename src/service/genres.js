@@ -5,6 +5,7 @@ export const genres = [];
 // Define a service using a base URL and expected endpoints
 export const genresApi = createApi({
     reducerPath: 'genresApi',
+    refetchOnMountOrArgChange: true,
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/api/genres' }),
     endpoints: (builder) => ({
         getMovieGenres: builder.query({

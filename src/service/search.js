@@ -4,7 +4,20 @@ import { genres } from './genres';
 // Define a service using a base URL and expected endpoints
 export const searchApi = createApi({
     reducerPath: 'searchApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/api/search' }),
+    refetchOnMountOrArgChange: true,
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://localhost:3100/api/search',
+        prepareHeaders: (headers, { getState }) => {
+            const token = getState().user.token;
+
+            // If we have a token set in state, let's assume that we should be passing it.
+            if (token) {
+                headers.set('x-auth-token', token)
+            }
+
+            return headers
+        },
+    }),
     endpoints: (builder) => ({
         getShortMovieList: builder.query({
             query: (query) => `short/?query=${query}`,
