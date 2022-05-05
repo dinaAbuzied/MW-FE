@@ -47,6 +47,9 @@ module.exports = {
       },
       maxHeight: {
         '85vh': '85vh'
+      },
+      translate: {
+        'n-full': '-100%',
       }
     }
   },

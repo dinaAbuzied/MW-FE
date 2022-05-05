@@ -42,7 +42,7 @@ export const movieListApi = createApi({
                 const patchNowPlaying = dispatch(
                     movieApi.util.updateQueryData('getNowPlaying', undefined, draft => {
                         // The `draft` is Immer-wrapped and can be "mutated" like in createSlice
-                        const movie = draft.results.find(item => item.id == movieID);
+                        const movie = draft.results.find(item => item.id === movieID);
                         if (movie) {
                             const index = movie.lists.indexOf(list)
                             if (index >= 0) {
@@ -56,7 +56,7 @@ export const movieListApi = createApi({
                 const patchUpComing = dispatch(
                     movieApi.util.updateQueryData('getUpComing', undefined, draft => {
                         // The `draft` is Immer-wrapped and can be "mutated" like in createSlice
-                        const movie = draft.results.find(item => item.id == movieID);
+                        const movie = draft.results.find(item => item.id === movieID);
                         if (movie) {
                             const index = movie.lists.indexOf(list)
                             if (index >= 0) {

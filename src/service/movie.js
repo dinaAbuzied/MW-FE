@@ -19,10 +19,10 @@ export const movieApi = createApi({
     }),
     endpoints: (builder) => ({
         getMovieDetails: builder.query({
-            query: (id) => {
+            query: ({id, timestamp}) => {
                 return {
                     url: '/',
-                    params: { id }
+                    params: {id, timestamp}
                 }
             },
             transformResponse: (response) => {
@@ -43,10 +43,10 @@ export const movieApi = createApi({
             }
         }),
         getMovieCredits: builder.query({
-            query: (id) => {
+            query: ({id, timestamp}) => {
                 return {
                     url: '/credits',
-                    params: { id }
+                    params: {id, timestamp}
                 }
             }
         }),

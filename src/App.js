@@ -1,7 +1,7 @@
 import {
-  BrowserRouter,
-  Routes,
-  Route
+    BrowserRouter,
+    Routes,
+    Route
 } from "react-router-dom";
 import React, { Suspense } from 'react';
 import SignIn from './components/sign-in/sign-in';
@@ -13,47 +13,50 @@ import MovieDetails from './components/shared/movie-details';
 import ProtectedRoute from './components/shared/protected-route';
 import { useGetMovieGenresQuery } from './service/genres';
 
-const SearchResults = React.lazy(() => import('./components/search-results/search-results'));
+const SearchResults = React.lazy(() =>
+    import ('./components/search-results/search-results'));
 
 function App() {
-  const { isLoading } = useGetMovieGenresQuery();
+    const { isLoading } = useGetMovieGenresQuery();
 
-  if (isLoading) return (<></>);
-  return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route exact path="/sign-in" element={<SignIn />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/search" element={
-            <Suspense fallback={<div>Loading...</div>}>
-              <SearchResults />
-            </Suspense>
-          }>
-            <Route path=":phrase" element={
-              <SearchResults />
-            } />
-          </Route>
-          <Route path="/my-movies" element={
-            <ProtectedRoute >
-              <Suspense fallback={<div>Loading...</div>}>
-                <MyMovies />
-              </Suspense>
-            </ProtectedRoute>
-          } />
-          <Route path="/account-settings" element={
-            <ProtectedRoute>
-              <Suspense fallback={<div>Loading...</div>}>
-                <AccountSetting />
-              </Suspense>
-            </ProtectedRoute>
-          } />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter >
-      <MovieDetails />
-    </>
-  );
-}
+    if (isLoading) 
+    return ( < > </>);
+                return ( <>
+                        <BrowserRouter >
+                        <Routes >
+                        <Route exact path = "/sign-in" element = { < SignIn / > }/> 
+                        <Route path = "/"element = { < Home / > }/> 
+                        <Route path = "/search"
+                        element = { <Suspense fallback = { <div> Loading... </div>}> <SearchResults / >
+                                </Suspense>
+                            }>
+                            <Route path = ":phrase"
+                            element = { <SearchResults/>
+                            }
+                            /> 
+                            </Route> 
+                            <Route path = "/my-movies" element = { 
+                            <ProtectedRoute>
+                                <Suspense fallback = { <div> Loading... </div>}> 
+                                <MyMovies/>
+                                    </Suspense> 
+                                    </ProtectedRoute>
+                                }
+                                /> 
+                                <Route path = "/account-settings" element = { 
+                                    <ProtectedRoute>
+                                    <Suspense fallback = { <div> Loading... </div>}> 
+                                    <AccountSetting />
+                                    </Suspense> 
+                                    </ProtectedRoute >
+                                    }
+                                    /> 
+                                    <Route path = "*"element = { <NotFound /> }/> 
+                                    </Routes> 
+                                    </BrowserRouter > 
+                                    <MovieDetails />
+                                    </>
+                                );
+                            }
 
-export default App;
+                            export default App;
