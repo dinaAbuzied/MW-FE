@@ -27,11 +27,12 @@ export default function MovieDetails() {
   const [toggleList, { isLoading: toggleLoading, error: toggleError, isSuccess: toggleSuccess }] = useToggleListMutation();
 
   const authenticated = useSelector((state) => state.user.authenticated);
+  const query = useSelector((state) => state.query);
 
   const btnClicked = (e, movieList, movieID) => {
     e.preventDefault();
     if (authenticated) {
-      toggleList({ list: movieList, movieID })
+      toggleList({ list: movieList, movieID, dialogParams: { id: dialog.params.id, timestamp: dialog.params.timestamp }, query })
     }
   }
 

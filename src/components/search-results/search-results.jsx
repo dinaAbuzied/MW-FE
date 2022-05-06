@@ -11,33 +11,33 @@ function SearchResults() {
     const dispatch = useDispatch();
     const query = useSelector((state) => state.query);
 
-    const {isFetching, error, data = {results:[]}, isUninitialized} = useGetLongMovieListQuery(query, {
+    const { isFetching, error, data = { results: [] }, isUninitialized } = useGetLongMovieListQuery(query, {
         skip: query.query === '',
     });
 
-    if(query.query === '' && params.phrase) {
+    if (query.query === '' && params.phrase) {
         console.log('new search')
         dispatch(newSearch(params.phrase));
     }
 
     return (
         <>
-        <Header/>
-        {
-            //TODO: add empty search message
-            isUninitialized ?  (<></>) : (
-            <main className="p-4 flex">
-                        <SearchResultsTable isFetching={isFetching} isUninitialized={isUninitialized} data={data} phrase={query.query} changePage={(page) => dispatch(gotoPage(page))} />
+            <Header />
+            {
+                //TODO: add empty search message
+                isUninitialized ? (<></>) : (
+                    <main className="p-4 flex">
+                        <SearchResultsTable isFetching={isFetching} isUninitialized={isUninitialized} data={data} query={query} changePage={(page) => dispatch(gotoPage(page))} />
                         {
                             isFetching || isUninitialized ? (<></>) : (
                                 <div className="xl:w-4/12 w-3/12 max-w-md hidden lg:block pl-4">
-                                    <FilterTable/>
+                                    <FilterTable />
                                 </div>
                             )
                         }
-            </main>
-            )
-        }
+                    </main>
+                )
+            }
         </>
     );
 }
