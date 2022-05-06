@@ -4,6 +4,7 @@ import { searchApi } from './search';
 
 export const movieListApi = createApi({
     reducerPath: 'movieListApi',
+    refetchOnMountOrArgChange: true,
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:3100/api/movieList',
         prepareHeaders: (headers, { getState }) => {
@@ -75,7 +76,6 @@ export const movieListApi = createApi({
                     searchApi.util.updateQueryData('getLongMovieList', query, draft => {
                         console.log(draft);
                         const movie = draft.results.find(item => item.id === movieID);
-                        console.log(movie);
                         if (movie) {
                             const index = movie.lists.indexOf(list)
                             if (index >= 0) {
@@ -87,6 +87,28 @@ export const movieListApi = createApi({
                         return draft;
                     })
                 )
+
+                const patchMovieList = dispatch(
+                    movieListApi.util.updateQueryData('getLists', undefined, draft => {
+                        const movieIndex = draft.findIndex(item => item.id === movieID);
+                        const movie = draft.find(item => item.id === movieID);
+                        if (movie) {
+                            const index = movie.lists.indexOf(list)
+                            if (index >= 0) {
+                                movie.lists.splice(index, 1);
+                                if(movie.lists.length === 0) {
+                                    draft.splice(movieIndex, 1);
+                                }
+                            } else {
+                                movie.lists.push(list);
+                            }
+                        } else {
+                           // TODO: add new movie to the list
+                        }
+                        return draft;
+                    })
+                )
+
                 try {
                     await queryFulfilled;
                 } catch {
@@ -94,13 +116,20 @@ export const movieListApi = createApi({
                     patchNowPlaying.undo();
                     patchUpComing.undo();
                     patchSearchResults.undo();
+                    patchMovieList.undo();
                 }
             }
         }),
         getLists: builder.query({
             query: () => ``,
             transformResponse: (respose) => {
-                return respose.movieLists;
+                return respose.movies.map(movie => {
+                    const year = movie.release_date ? new Date(movie.release_date).getFullYear() : '--';
+                    const list = movie.genres.map((genre, index) => {
+                        return {id: index, name: genre}
+                    });
+                        return { ...movie, year, genres: list }
+                });
             }
         }),
     }),
