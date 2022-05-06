@@ -41,7 +41,7 @@ export const searchApi = createApi({
             transformResponse: (response) => {
                 return {
                     ...response, results: response.results.map(movie => {
-                        const year = new Date(movie.release_date).getFullYear();
+                        const year = movie.release_date ? new Date(movie.release_date).getFullYear() : '--';
                         const list = movie.genre_ids.map(genre => genres.find(d => d.id === genre));
                         return { ...movie, year, genres: list }
                     }),
