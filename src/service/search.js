@@ -6,7 +6,7 @@ export const searchApi = createApi({
     reducerPath: 'searchApi',
     refetchOnMountOrArgChange: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3100/api/search',
+        baseUrl: 'https://movie-world-091085.herokuapp.com/api/search',
         prepareHeaders: (headers, { getState }) => {
             const token = getState().user.token;
 

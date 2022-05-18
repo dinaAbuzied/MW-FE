@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const languagesApi = createApi({
     reducerPath: 'languagesApi',
     refetchOnMountOrArgChange: true,
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/api/languages' }),
+    baseQuery: fetchBaseQuery({ baseUrl: ' https://movie-world-091085.herokuapp.com/api/languages' }),
     endpoints: (builder) => ({
         getLanguages: builder.query({
             query: () => ``,

@@ -5,7 +5,7 @@ export const userApi = createApi({
     reducerPath: 'userApi',
     refetchOnMountOrArgChange: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3100/api/user',
+        baseUrl: 'https://movie-world-091085.herokuapp.com/api/user',
         prepareHeaders: (headers, { getState }) => {
             const token = getState().user.token;
 
@@ -53,7 +53,7 @@ export const imagesApi = createApi({
     reducerPath: 'imagesApi',
     refetchOnMountOrArgChange: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3100/api/images',
+        baseUrl: 'https://movie-world-091085.herokuapp.com/api/images',
         prepareHeaders: (headers, { getState }) => {
             const token = getState().user.token;
 

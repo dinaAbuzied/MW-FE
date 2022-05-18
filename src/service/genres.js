@@ -6,7 +6,7 @@ export const genres = [];
 export const genresApi = createApi({
     reducerPath: 'genresApi',
     refetchOnMountOrArgChange: true,
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/api/genres' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://movie-world-091085.herokuapp.com/api/genres' }),
     endpoints: (builder) => ({
         getMovieGenres: builder.query({
             query: () => ``,

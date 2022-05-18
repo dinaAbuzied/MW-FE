@@ -5,7 +5,7 @@ export const movieApi = createApi({
     reducerPath: 'movieApi',
     refetchOnMountOrArgChange: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3100/api/movie',
+        baseUrl: 'https://movie-world-091085.herokuapp.com/api/movie',
         prepareHeaders: (headers, { getState }) => {
             const token = getState().user.token;
 
